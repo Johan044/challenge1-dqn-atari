@@ -1,0 +1,27 @@
+[project]
+name = "challenge1-dqn-atari"
+version = "0.1.0"
+description = "DQN agent for Atari MontezumaRevenge using ALE"
+authors = [
+    {name = "Your Name"}
+]
+requires-python = ">=3.10,<3.13"
+
+dependencies = [
+    "numpy>=1.26",
+    "torch>=2.2",
+    "gymnasium[atari]>=0.29",
+    "ale-py>=0.10",
+    "stable-baselines3[extra]>=2.3",
+    "tensorboard>=2.16",
+    "autorom[accept-rom-license]>=0.6"
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
