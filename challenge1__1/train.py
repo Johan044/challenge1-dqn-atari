@@ -157,7 +157,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--mode",
-        choices=["train", "play", "sweep"],  # <-- agregamos sweep
+        choices=["train", "play", "sweep"],
         required=True
     )
     parser.add_argument("--model-path", default="models/montezuma_dqn")
