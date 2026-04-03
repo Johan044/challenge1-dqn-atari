@@ -1,0 +1,113 @@
+[
+{
+"name": "exp_01_baseline",
+"learning_rate": 0.0001,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_02_low_lr",
+"learning_rate": 0.00005,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_03_high_lr",
+"learning_rate": 0.0002,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_04_small_buffer",
+"learning_rate": 0.0001,
+"buffer_size": 50000,
+"learning_starts": 10000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_05_large_batch",
+"learning_rate": 0.0001,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 128,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_06_fast_target",
+"learning_rate": 0.0001,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 1000,
+"exploration_fraction": 0.25,
+"exploration_final_eps": 0.01,
+"timesteps": 200000
+},
+
+{
+"name": "exp_07_more_exploration",
+"learning_rate": 0.0001,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.30,
+"exploration_final_eps": 0.02,
+"timesteps": 200000
+},
+
+{
+"name": "exp_08_less_exploration",
+"learning_rate": 0.0001,
+"buffer_size": 100000,
+"learning_starts": 20000,
+"batch_size": 64,
+"gamma": 0.995,
+"train_freq": 4,
+"target_update_interval": 2000,
+"exploration_fraction": 0.15,
+"exploration_final_eps": 0.005,
+"timesteps": 200000
+}
+]
