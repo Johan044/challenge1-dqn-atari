@@ -26,7 +26,13 @@ N_STACK = 4
 # ================================
 
 class ExplorationRewardWrapper(VecEnvWrapper):
-  
+    """
+    Intrinsic exploration bonus wrapper.
+    - One visited set per environment (fixes shared-state bug)
+    - Hash computed on downsampled last frame (more stable than raw 84x84x4)
+    - No fixed per-step bonus (was pure noise)
+    - No death penalty (game already penalizes, double penalty breaks reward scale)
+    """
 
     def __init__(self, venv, bonus=0.1):
         super().__init__(venv)
@@ -62,10 +68,20 @@ class ExplorationRewardWrapper(VecEnvWrapper):
 
 
 # ================================
-# Tensorboard logging
+# TensorBoard logging
 # ================================
 
 class TensorBoardCallback(BaseCallback):
+    """
+    Logs all metrics required by the assignment:
+    - Epsilon schedule
+    - Episode reward
+    - Rolling mean reward (100-episode window)
+    - Training loss
+    - Episode length
+    - Seed used (for reproducibility)
+    """
+
     def __init__(self, seed=42):
         super().__init__()
         self.writer = None
@@ -79,7 +95,6 @@ class TensorBoardCallback(BaseCallback):
         for fmt in self.model._logger.output_formats:
             if isinstance(fmt, TensorBoardOutputFormat):
                 self.writer = fmt.writer
-                # Loguea el seed usado para reproducibilidad
                 self.writer.add_text("config/seed", str(self.seed), 0)
                 return
 
@@ -98,7 +113,7 @@ class TensorBoardCallback(BaseCallback):
             self.num_timesteps
         )
 
-        # Loss (disponible después de learning_starts)
+        # Training loss (available after learning_starts)
         if self.model.logger and hasattr(self.model, '_logger'):
             loss = self.model._logger.name_to_value.get("train/loss", None)
             if loss is not None:
@@ -119,7 +134,7 @@ class TensorBoardCallback(BaseCallback):
                 self.num_timesteps
             )
 
-            # Rolling mean (ventana 100 episodios — requerido por el taller)
+            # Rolling mean reward — 100-episode window (required by assignment)
             if len(self.episode_rewards_history) >= 10:
                 rolling_mean = np.mean(self.episode_rewards_history)
                 self.writer.add_scalar(
@@ -135,7 +150,7 @@ class TensorBoardCallback(BaseCallback):
 
 
 # ================================
-# ENVIRONMENT BUILDERS
+# Environment builders
 # ================================
 
 def build_training_environment(seed):
@@ -163,14 +178,14 @@ def build_playing_environment():
 
 
 # ================================
-# TRAINING FUNCTION
+# Training function
 # ================================
 
 def train_agent(model_path, timesteps, seed, tensorboard_log, hparams=None):
     Path(model_path).parent.mkdir(parents=True, exist_ok=True)
 
     if hparams is None:
-        # Defaults alineados con el rango del taller
+        # Default hyperparameters aligned with assignment search space
         hparams = dict(
             learning_rate=1e-4,
             buffer_size=100000,
@@ -183,7 +198,7 @@ def train_agent(model_path, timesteps, seed, tensorboard_log, hparams=None):
             exploration_final_eps=0.01
         )
 
-    # Loguea hparams en tensorboard
+    # Log hyperparameters to TensorBoard
     writer = SummaryWriter(log_dir=tensorboard_log)
     hparams_to_log = {k: v for k, v in hparams.items() if k != "name"}
     hparams_to_log["seed"] = seed
@@ -193,10 +208,10 @@ def train_agent(model_path, timesteps, seed, tensorboard_log, hparams=None):
     env = build_training_environment(seed)
 
     if os.path.exists(f"{model_path}.zip"):
-        print(f"Cargando modelo existente: {model_path}.zip")
+        print(f"Loading existing model: {model_path}.zip")
         model = DQN.load(model_path, env=env)
     else:
-        print(f"Creando nuevo modelo con hparams: {hparams_to_log}")
+        print(f"Creating new model with hparams: {hparams_to_log}")
         model = DQN(
             "CnnPolicy",
             env,
@@ -224,7 +239,7 @@ def train_agent(model_path, timesteps, seed, tensorboard_log, hparams=None):
     model.save(model_path)
     env.close()
 
-    print(f"Modelo guardado en {model_path}.zip")
+    print(f"Model saved at {model_path}.zip")
 
     if model.ep_info_buffer:
         return float(np.mean([ep["r"] for ep in model.ep_info_buffer]))
@@ -232,12 +247,12 @@ def train_agent(model_path, timesteps, seed, tensorboard_log, hparams=None):
 
 
 # ================================
-# PLAY
+# Play
 # ================================
 
 def play_agent(model_path, episodes):
     if not os.path.exists(f"{model_path}.zip"):
-        raise FileNotFoundError(f"Modelo no encontrado: {model_path}.zip")
+        raise FileNotFoundError(f"Model not found: {model_path}.zip")
 
     env = build_playing_environment()
     model = DQN.load(model_path, env=env)
@@ -254,14 +269,14 @@ def play_agent(model_path, episodes):
         if dones[0]:
             if infos[0].get("lives", 0) == 0:
                 completed += 1
-                print(f"Episodio {completed} — reward: {episode_reward:.1f}")
+                print(f"Episode {completed} — reward: {episode_reward:.1f}")
                 episode_reward = 0
 
     env.close()
 
 
 # ================================
-# ARGUMENT PARSER
+# Argument parser
 # ================================
 
 def parse_args():
@@ -278,23 +293,22 @@ def parse_args():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--tensorboard-log", default="logs/montezuma_dqn")
 
-    # NUEVO: permite cargar hparams del JSON por nombre de experimento
     parser.add_argument(
         "--exp-name",
         default=None,
-        help="Nombre del experimento en sweep_configs.json (ej: exp_07_more_exploration)"
+        help="Experiment name from sweep_configs.json (e.g. exp_07_more_exploration)"
     )
     parser.add_argument(
         "--sweep-file",
         default="sweep_configs.json",
-        help="Ruta al archivo JSON de configuraciones"
+        help="Path to the JSON sweep configuration file"
     )
 
     return parser.parse_args()
 
 
 # ================================
-# MAIN
+# Main
 # ================================
 
 def main():
@@ -304,20 +318,20 @@ def main():
 
         hparams = None
 
-        # Si se pasa --exp-name, carga los hparams del JSON
+        # If --exp-name is provided, load hparams from JSON
         if args.exp_name:
             if not os.path.exists(args.sweep_file):
-                print(f"ERROR: No se encontró {args.sweep_file}")
+                print(f"ERROR: {args.sweep_file} not found")
                 return
             with open(args.sweep_file) as f:
                 sweeps = json.load(f)
             match = next((s for s in sweeps if s["name"] == args.exp_name), None)
             if match is None:
-                print(f"ERROR: Experimento '{args.exp_name}' no encontrado en {args.sweep_file}")
-                print(f"Experimentos disponibles: {[s['name'] for s in sweeps]}")
+                print(f"ERROR: Experiment '{args.exp_name}' not found in {args.sweep_file}")
+                print(f"Available experiments: {[s['name'] for s in sweeps]}")
                 return
             hparams = match
-            print(f"Usando hparams de '{args.exp_name}' del JSON")
+            print(f"Using hparams from '{args.exp_name}'")
 
         train_agent(
             model_path=args.model_path,
@@ -335,14 +349,14 @@ def main():
 
     elif args.mode == "sweep":
         if not os.path.exists(args.sweep_file):
-            print(f"ERROR: No se encontró {args.sweep_file}")
+            print(f"ERROR: {args.sweep_file} not found")
             return
 
         with open(args.sweep_file) as f:
             sweeps = json.load(f)
 
         for sweep in sweeps:
-            print(f"\n=== Entrenando: {sweep['name']} ===")
+            print(f"\n=== Training: {sweep['name']} ===")
             model_path = f"models/{sweep['name']}"
             tensorboard_log = f"{args.tensorboard_log}/{sweep['name']}"
 
