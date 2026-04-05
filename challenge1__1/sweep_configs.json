@@ -84,17 +84,17 @@
 },
 
 {
-"name": "exp_07_more_exploration",
-"learning_rate": 0.0001,
-"buffer_size": 100000,
-"learning_starts": 20000,
-"batch_size": 64,
-"gamma": 0.995,
-"train_freq": 4,
-"target_update_interval": 2000,
-"exploration_fraction": 0.30,
-"exploration_final_eps": 0.02,
-"timesteps": 200000
+  "name": "exp_07_more_exploration",
+  "learning_rate": 0.0001,
+  "buffer_size": 100000,
+  "learning_starts": 10000,
+  "batch_size": 32,
+  "gamma": 0.99,
+  "train_freq": 4,
+  "target_update_interval": 2000,
+  "exploration_fraction": 0.25,
+  "exploration_final_eps": 0.01,
+  "timesteps": 500000
 },
 
 {
