@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Logs y modelos (pueden pesar GBs)
+logs/
+challenge3_group1/logs/*
+!challenge3_group1/logs/.gitkeep
+challenge1__1/logs/*
+!challenge1__1/logs/.gitkeep
+
+# Modelos entrenados
+*.pt
+models/
+
+# VS Code
+.vscode/

@@ -1,0 +1,27 @@
+[project]
+name = "challenge3-ppo-atari"
+version = "0.1.0"
+description = "PPO agent for Atari MontezumaRevenge-v5 — Challenge 3 (Group 1)"
+authors = [
+    {name = "Group 1"}
+]
+requires-python = ">=3.10,<3.13"
+
+dependencies = [
+    "numpy>=1.26",
+    "torch>=2.2",
+    "gymnasium[atari]>=0.29",
+    "ale-py>=0.10",
+    "opencv-python>=4.9",
+    "tensorboard>=2.16",
+    "autorom[accept-rom-license]>=0.6",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
