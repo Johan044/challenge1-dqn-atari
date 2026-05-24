@@ -7,7 +7,7 @@
 
 ## Video
 
-> Link will be added before final submission.
+> https://drive.google.com/file/d/1nScjf-UPfIeWt7n_vUGmy-GTmt6VzpFs/view?usp=drive_link
 
 
 ## Environment
