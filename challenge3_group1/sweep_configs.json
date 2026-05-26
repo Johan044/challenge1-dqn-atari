@@ -3,30 +3,30 @@
     "comment": "--- Baseline seed 0 ---",
     "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
     "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 0
+    "seed": 0, "total_steps": 1000000
   },
   {
     "comment": "--- Baseline seed 1 ---",
     "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
     "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 1
+    "seed": 1, "total_steps": 1000000
   },
   {
     "comment": "--- Baseline seed 2 ---",
     "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
     "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 2
+    "seed": 2, "total_steps": 1000000
   },
   {
-    "comment": "--- Ablation: lower entropy (less exploration) ---",
+    "comment": "--- Ablacion: lower entropy ---",
     "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
     "ent_coef": 0.01, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 0
+    "seed": 0, "total_steps": 1000000
   },
   {
-    "comment": "--- Ablation: shorter horizon (faster updates) ---",
+    "comment": "--- Ablacion: shorter horizon ---",
     "lr": 2.5e-4, "horizon": 1024, "n_epochs": 6, "batch_size": 64,
     "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 0
+    "seed": 0, "total_steps": 1000000
   }
 ]
