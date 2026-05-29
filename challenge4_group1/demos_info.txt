@@ -1,0 +1,15 @@
+Environment: ALE/MontezumaRevenge-v5
+
+Demonstration Dataset 1
+Source checkpoint: PPO Challenge 3 best checkpoint
+Demonstration size: 5000 state-action pairs
+Mean return of demonstrator: 5.0
+Std return of demonstrator: 0.0
+Seed: 42
+
+Demonstration Dataset 2
+Source checkpoint: PPO Challenge 3 best checkpoint
+Demonstration size: 50000 state-action pairs
+Mean return of demonstrator: 5.0
+Std return of demonstrator: 0.0
+Seed: 42
