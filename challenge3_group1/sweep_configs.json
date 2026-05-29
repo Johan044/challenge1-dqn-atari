@@ -1,17 +1,5 @@
 [
   {
-    "comment": "--- Baseline seed 0 ---",
-    "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
-    "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 0
-  },
-  {
-    "comment": "--- Baseline seed 1 ---",
-    "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
-    "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,
-    "seed": 1
-  },
-  {
     "comment": "--- Baseline seed 2 ---",
     "lr": 2.5e-4, "horizon": 2048, "n_epochs": 4, "batch_size": 64,
     "ent_coef": 0.02, "clip_eps": 0.1, "gamma": 0.99, "gae_lambda": 0.95,

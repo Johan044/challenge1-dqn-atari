@@ -308,7 +308,7 @@ def run_sweep(sweep_file: str = "sweep_configs.json"):
     for i, override in enumerate(configs):
         cfg = {**DEFAULTS, **override}
         run_name = make_run_name(cfg)
-        log_dir = os.path.join(LOGS_DIR, f"sweep_{i:02d}_{run_name}")
+        log_dir = os.path.join(LOGS_DIR, f"sweep_{i+2:02d}_{run_name}")
 
         best_reward, _ = train(cfg, log_dir)
         results.append({"config": cfg, "best_reward": best_reward, "run": run_name})
