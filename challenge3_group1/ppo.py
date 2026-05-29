@@ -3,11 +3,6 @@ import torch.nn as nn
 from torch.distributions import Categorical
 
 
-# ---------------------------------------------------------------------------
-# Generalised Advantage Estimation (GAE)
-# Schulman et al., 2016 — https://arxiv.org/abs/1506.02438
-# ---------------------------------------------------------------------------
-
 def compute_gae(
     rewards: list,
     values: list,

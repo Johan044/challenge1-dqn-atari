@@ -6,8 +6,6 @@ Shared convolutional Actor-Critic network for PPO on Atari.
 Architecture:
   Input : (batch, 4, 84, 84)  — 4 stacked grayscale frames
   CNN   : 3 convolutional layers (same as Nature DQN)
-  Actor : Linear head -> logits over discrete actions
-  Critic: Linear head -> scalar state value V(s)
 """
 
 import torch

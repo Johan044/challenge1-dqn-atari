@@ -12,6 +12,8 @@ challenge3_group1/logs/*
 !challenge3_group1/logs/.gitkeep
 challenge1__1/logs/*
 !challenge1__1/logs/.gitkeep
+logs/montezuma_ppo/*
+!logs/montezuma_ppo/.gitkeep
 
 # Modelos entrenados
 *.pt

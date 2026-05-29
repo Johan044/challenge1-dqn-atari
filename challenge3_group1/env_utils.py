@@ -32,7 +32,7 @@ def make_env(env_id: str = ENV_ID, seed: int = 0, render_mode: str = None) -> gy
     Returns:
         A fully wrapped gymnasium environment.
     """
-    env = gym.make(env_id, render_mode=render_mode, frameskip=1)  # disable default frameskip; AtariPreprocessing handles it
+    env = gym.make(env_id, render_mode=render_mode, frameskip=1)
 
     env = AtariPreprocessing(
         env,
